@@ -13,9 +13,9 @@ import retrofit2.http.Query
 object MoviesApiClient {
 
 
-    private val API_BASE_URL = "https://api.themoviedb.org/3"
+    private val API_BASE_URL = "https://api.themoviedb.org/"
 
-    const val API_KEY = "fab7d97ae19573a00a05dcea995abddf"
+    const val API_KEY = "52f41ad76e0ef3ea8060f5006b49c06f"
 
     private var moviesApiInterface:MoviesApiInterface?=null
 
@@ -47,7 +47,7 @@ object MoviesApiClient {
 
     interface MoviesApiInterface {
 
-        @GET("/api/museums/")
+        @GET("3/movie/popular")
         fun getMovies(@Query("api_key") api: String
                         ): Call<MoviesDataResponsePojo>
 
