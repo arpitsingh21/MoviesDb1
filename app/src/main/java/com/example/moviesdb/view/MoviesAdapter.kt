@@ -10,7 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.moviesdb.R
 import com.example.moviesdb.model.Movies
 
-class MoviesAdapter(private var movies:List<Movies>):RecyclerView.Adapter<MoviesAdapter.MViewHolder>() {
+class MoviesAdapter(private var movies: List<Movies>, var clickListner: OnItemClickListener) :
+    RecyclerView.Adapter<MoviesAdapter.MViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,8 +22,13 @@ class MoviesAdapter(private var movies:List<Movies>):RecyclerView.Adapter<Movies
     override fun onBindViewHolder(vh: MViewHolder, position: Int) {
         val movies = movies[position]
 
-    vh.textViewName.text= movies.getTitle()
-    Glide.with(vh.imageView.context).load("https://image.tmdb.org/t/p/w500"+movies.getPosterPath()).into(vh.imageView)
+        vh.textViewName.text = movies.getTitle()
+        Glide.with(vh.imageView.context)
+            .load("https://image.tmdb.org/t/p/w500" + movies.getPosterPath()).into(vh.imageView)
+
+        vh.itemView.setOnClickListener() {
+            clickListner.onMovieClick(movies)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -38,6 +44,11 @@ class MoviesAdapter(private var movies:List<Movies>):RecyclerView.Adapter<Movies
         val textViewName: TextView = view.findViewById(R.id.textViewName)
         val imageView: ImageView = view.findViewById(R.id.imageView)
         val textViewLink: TextView = view.findViewById(R.id.textViewLink)
+    }
+
+
+    interface OnItemClickListener {
+        fun onMovieClick(c: Movies)
     }
 
 }

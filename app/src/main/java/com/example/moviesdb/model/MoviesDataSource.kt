@@ -7,4 +7,6 @@ interface MoviesDataSource {
 
     fun getMovies(apikey:String,callback: MoviesCallback<MoviesDataResponsePojo>)
 
+    fun getMovieDetail(movieId : kotlin.Int,apikey:String,callback: MoviesCallback<MovieDetailResposnePojo>)
+
 }

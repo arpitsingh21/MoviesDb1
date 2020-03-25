@@ -1,5 +1,6 @@
 package com.example.moviesdb.data
 
+import com.example.moviesdb.model.MovieDetailResposnePojo
 import com.example.moviesdb.model.MoviesDataResponsePojo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -7,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -50,6 +52,10 @@ object MoviesApiClient {
         @GET("3/movie/popular")
         fun getMovies(@Query("api_key") api: String
                         ): Call<MoviesDataResponsePojo>
+
+        @GET("3/movie/{movie_id}")
+        fun getMovieDetail(@Path("movie_id") movieId: kotlin.Int, @Query("api_key") api: String
+        ): Call<MovieDetailResposnePojo>
 
     }
 

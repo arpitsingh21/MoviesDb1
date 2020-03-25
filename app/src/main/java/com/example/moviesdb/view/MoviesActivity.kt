@@ -1,5 +1,6 @@
 package com.example.moviesdb.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,14 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesdb.R
 import com.example.moviesdb.di.Injection
 import com.example.moviesdb.model.Movies
+import com.example.moviesdb.view.movieDetail.MovieDetailsActivity
 import com.example.moviesdb.viewModel.MoviesViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_error.*
 
-class MoviesActivity : AppCompatActivity() {
+class MoviesActivity : AppCompatActivity() ,MoviesAdapter.OnItemClickListener{
+
 
     private lateinit var viewModel: MoviesViewModel
     private lateinit var adapter: MoviesAdapter
+
+    private lateinit var itemclickListner : MoviesAdapter.OnItemClickListener
 
     companion object {
         const val TAG= "CONSOLE"
@@ -33,7 +38,7 @@ class MoviesActivity : AppCompatActivity() {
 
     //ui
     private fun setupUI(){
-        adapter= MoviesAdapter(viewModel.movies.value?: emptyList())
+        adapter= MoviesAdapter(viewModel.movies.value?: emptyList(),this)
         recyclerView.layoutManager= LinearLayoutManager(this)
         recyclerView.adapter= adapter
     }
@@ -80,4 +85,13 @@ class MoviesActivity : AppCompatActivity() {
         super.onResume()
         viewModel.loadMovies()
     }
+
+    override fun onMovieClick(c: Movies) {
+
+        val i = Intent(this, MovieDetailsActivity::class.java)
+        i.putExtra("movieId",c.getId())
+        startActivity(i)
+
+    }
+
 }
